@@ -1,0 +1,51 @@
+#!/bin/bash
+
+args=("$@")
+
+IMAGE=${args[0]}
+NAME=${args[1]}
+PORT=${args[2]}
+CLEAN=${args[3]}
+
+if [ -z "${IMAGE}" ]
+then
+      echo "Usage: ./upgrade.sh <image> <name> <port:port> --prune"
+      exit 0
+else
+      echo "Image: ${IMAGE}"
+fi
+
+if [ -z "${NAME}" ]
+then
+      echo "Usage: ./upgrade.sh <image> <name> <port:port> --prune"
+      exit 0
+else
+      echo "Name: ${NAME}"
+fi
+
+if [ -z "${PORT}" ]
+then
+      echo "Usage: ./upgrade.sh <image> <name> <port:port> --prune"
+      exit 0
+else
+      echo "Name: ${PORT}"
+fi
+
+echo -e "\n>>> Pulling the latest docker images"
+docker pull "${IMAGE}":latest
+
+echo -e "\n>>> Removing the current container"
+docker rm "${NAME}" -f
+
+echo -e "\n>>> Running the new container at the desired port"
+docker run --name="${NAME}" --restart unless-stopped -d -p "${PORT}" "${IMAGE}":latest
+
+if [ -z "${CLEAN}" ]
+then
+    exit 0
+else
+    echo -e "\n>>> Cleaning up space"
+    docker system prune -a -f
+    docker image prune -a -f
+fi
+
