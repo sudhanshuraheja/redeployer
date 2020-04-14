@@ -9,7 +9,7 @@ CLEAN=${args[3]}
 
 if [ -z "${IMAGE}" ]
 then
-      echo "Usage: ./upgrade.sh <image> <name> <port:port> --prune"
+      echo "Usage: ./redeployer <image> <name> <port:port> --prune"
       exit 0
 else
       echo "Image: ${IMAGE}"
@@ -17,7 +17,7 @@ fi
 
 if [ -z "${NAME}" ]
 then
-      echo "Usage: ./upgrade.sh <image> <name> <port:port> --prune"
+      echo "Usage: ./redeployer <image> <name> <port:port> --prune"
       exit 0
 else
       echo "Name: ${NAME}"
@@ -25,7 +25,7 @@ fi
 
 if [ -z "${PORT}" ]
 then
-      echo "Usage: ./upgrade.sh <image> <name> <port:port> --prune"
+      echo "Usage: ./redeployer <image> <name> <port:port> --prune"
       exit 0
 else
       echo "Name: ${PORT}"
